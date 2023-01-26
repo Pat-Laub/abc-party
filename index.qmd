@@ -1,8 +1,8 @@
 ---
-title: UNSW Slides Template
-subtitle: Made using Quarto and reveal.js
-author: Dr Patrick Laub
-date: today
+title: Approximate Bayesian Computation and Insurance
+author: Dr Patrick Laub <br> Joint work with Dr Pierre-Olivier Goffard
+date: 3 February 2023
+date-format: long
 format:
   revealjs:
     theme: [serif, custom.scss]
@@ -24,114 +24,174 @@ execute:
   echo: true
 ---
 
-## Quarto
+# 
 
-[Quarto](https://quarto.org) is a successor to the popular RMarkdown project.
-They are both built by the [RStudio/Posit](https://www.rstudio.com) team, and RStudio is a tool to use to write Quarto documents.
-Quarto is not less attached to the R language than RMarkdown.
-
-Documents in the Quarto format are written in markdown.
-So the normal features, like _italics_, __bold__, ~~strikethrough~~ and so on are easy to add.
-
-Like RMarkdown, Quarto can output a variety of different kinds of documents.
-It can create reports, or PowerPoint slides, or HTML websites.
-For these slides, Quarto is generating a HTML set of slides built on [reveal.js](http://revealjs.com).
-
-## The reveal.js grid
-
-There are a lot of great features of reveal.js slides.
-One relatively minor feature, is the ability to create 2-dimensional grid of slides.
-
-I use each column to represent a new topic, and start each column with a visually distinct slide (which is usually quite empty) to announce the new topic.
-
-::: {.callout-note}
-To move through the slides in order, press the spacebar.
-To see the overall structure of the talk, press O.
-:::
-
-# Quarto basics {background-image="unsw-yellow-shape.png"}
-
-## Columns
+<h2>About me</h2>
 
 ::: columns
-::: column
+::: {.column width="65%"}
 
-It is easy to split the slide into columns.
-
-Quarto has a built-in system for footnotes and reference lists.
-
-Instead, I simply show the source of any quotes/figures I use in the footer of the slide they appear.
-:::
-::: column
-
-![The radian and its relation to the circle](https://upload.wikimedia.org/wikipedia/commons/4/4e/Circle_radians.gif)
+- Software engineer & maths (UQ)
+- PhD in computational applied probability (Aarhus)
+- Actuarial science post-doc (Lyon)
+- Research software engineer (Uni Melbourne)
+- Actuarial science lecturer (UNSW)
 
 :::
+::: {.column width="35%"}
+
+![](hawkes-book-cover.jpeg)
+
 :::
+:::
+
+![](typical_cond_int2.svg){.absolute bottom=0 left=150 width="350"}
 
 ::: footer
-Source: [Wikipedia](https://en.wikipedia.org/wiki/Radian#mediaviewer/File:Circle_radians.gif)
+Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
 :::
 
-## Unequal-sized columns
+## {data-visibility="uncounted"}
 
-::: columns
-::: {.column width="60%"}
-
-If my picture is too tall, I normally just increase the width of the other column rather than adjust the size of the image directly.
-This column is 60% wide.
-
-__Fermat's last theorem:__
-
-$$
-x^n + y^n = z^n
-$$
-
-for $x,y,z \in \mathbf{N}$ is not possible for $n > 2$.
-
-:::
-::: {.column width="40%"}
-
-![A male northern Cardina](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Male_northern_cardinal_in_Central_Park_%2852612%29.jpg/780px-Male_northern_cardinal_in_Central_Park_%2852612%29.jpg)
-
-:::
-:::
+<iframe src="https://pat-laub.github.io/DeepLearningForActuaries/" width="100%" height="700" style="border:none;"></iframe>
 
 ::: footer
-Source: [Wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Male_northern_cardinal_in_Central_Park_%2852612%29.jpg/780px-Male_northern_cardinal_in_Central_Park_%2852612%29.jpg)
+Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
 :::
 
-# Code and outputs {background-image="unsw-yellow-shape.png"}
+## 
 
-## Code
+![Our IME paper](abstract.png)
 
-It is quite easy to show code and their results.
+Packages: _approxbayescomp_ for Python & R.
 
-Here is some R code:
+## Statistics with likelihoods
 
-```{r}
-data(iris)
-head(iris)
-```
+For simple models we can write down the likelihood.
 
-Here is some Python code:
+When simple rv's are combined, the resulting thing rarely has a tractable likelihood.
 
-```{python}
-[x**2 for x in range(10) if x%2 == 0]
-```
+$$ X_1, X_2 \overset{\mathrm{i.i.d.}}{\sim} f_X(\,\cdot\,) \Rightarrow X_1 + X_2 \sim ~ \texttt{Intractable likelihood}! $$
 
-## Code II 
+. . .
 
-You can easily hide the code and just show the output:
-```{python}
-#| echo: false
-#| fig-align: center
-import matplotlib.pyplot as plt
-import seaborn as sns
-penguins = sns.load_dataset("penguins")
-sns.jointplot(data=penguins, x="flipper_length_mm", y="bill_length_mm", hue="species");
-plt.show()
-```
+Have a sample of $n$ i.i.d. observations. As $n$ increases,
+$$ p_{\boldsymbol{X}}(\boldsymbol{x} \mid \boldsymbol{\theta}) = \prod \text{Small things} \overset{\dagger}{=} 0, $$
+or just takes a long time to compute, then $\texttt{Intractable}$ $\texttt{Likelihood}$!
+
+. . .
+
+_Usually it's still possible to simulate these things..._
+
+# Approximate Bayesian Computation {background-image="unsw-yellow-shape.png"}
+
+<center>
+
+<br>
+
+QR CODE HERE
+
+<br>
+
+[https://pat-laub.github.io/party-game](https://pat-laub.github.io/party-game)
+
+</center>
+
+{{< include _coin-flip-animations.qmd >}}
+
+# Insurance & Theory {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
+
+## Insurance Motivation
+
+Have a random number of claims $N \sim p_N( \,\cdot\, ; \boldsymbol{\theta}_{\mathrm{freq}} )$.
+
+Random claim sizes $U_1, \dots, U_N \sim f_U( \,\cdot\, ; \boldsymbol{\theta}_{\mathrm{sev}} )$.
+
+We aggregate them somehow, like:
+
+- aggregate claims: $X = \sum_{i=1}^N U_i$
+- maximum claims: $X = \max_{i=1}^N U_i$
+- stop-loss: $X = ( \sum_{i=1}^N U_i - c )_+$.
+
+__Question__: Given a sample $X_1, \dots, X_n$ of the summaries, what is the $\boldsymbol{\theta} = (\boldsymbol{\theta}_{\mathrm{freq}}, \boldsymbol{\theta}_{\mathrm{sev}})$ which explains them?
+
+E.g. a reinsurance contract
+
+## Does it work in theory? {.smaller}
+
+__Proposition__: Say we have continuous data $\boldsymbol{x}_{\text{obs}}$, and our prior $\pi(\boldsymbol{\theta})$ has bounded support.
+
+If for some $\epsilon \ge 0$ we have
+
+$$ \sup\limits_{ (\boldsymbol{z}, \boldsymbol{\theta}) : \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}} ) < \epsilon, \boldsymbol{\theta} \in \boldsymbol{ \Theta } } \pi( \boldsymbol{z} \mid \boldsymbol{ \theta }) < \infty $$
+
+then for each $\boldsymbol{\theta} \in \boldsymbol{\Theta}$
+
+$$ \lim_{\epsilon \to 0} \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) . $$
+
+We sample the _approximate_/_ABC posterior_.
+
+$$ \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \propto \pi(\theta) \times \mathbb{P}\bigl( \lVert \boldsymbol{x}_{\text{obs}}-\boldsymbol{x}^{\ast} \rVert \leq \epsilon \text{ where } \boldsymbol{x}^{\ast} \sim \boldsymbol{\theta} \bigr) , $$
+
+but we care about the true posterior $\pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$.
+
+::: footer
+Rubio and Johansen (2013), _A simple approach to maximum intractable likelihood estimation_, Electronic Journal of Statistics.
+:::
+
+## Mixed data
+
+We filled in some of the blanks for mixed data.
+Our data was mostly continuous data but had an atom at 0.
 
 
 
+Get
+$$ \lim_{\epsilon \to 0} \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) $$
+
+when
+
+$$ \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}}) = \begin{cases}
+            \mathcal{D}^+(\boldsymbol{z}^+, \boldsymbol{x}_{\text{obs}^+}) & \text{if } \# \text{Zeros}(\boldsymbol{z}) = \# \text{Zeros}(\boldsymbol{x}_{\text{obs}}) , \\
+            \infty & \text{otherwise}.
+            \end{cases}
+$$
+
+# In Practice {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
+
+## ABC Sequential Monte Carlo {.smaller}
+
+- Input: data $\boldsymbol{x}_{\text{obs}}$, prior $\pi(\boldsymbol{\theta})$, distance $\mathcal{D}(\cdot,\cdot)$
+            # of generations $G$, # of particles $K$
+- Start with $\epsilon_0 = \infty$,  $\pi_0(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta})$
+- For each generation $g = 1$ to $G$
+  - For each particle $k = 1$ to $K$
+    - Repeatedly:
+      - Generate a guess $\boldsymbol{\theta}^{\ast}$ from $\pi_{g-1}(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$
+      - Generate fake data $\boldsymbol{x}^{\ast}$ from $\boldsymbol{\theta}^{\ast}$
+      - Stop when $\mathcal{D}(\boldsymbol{x}^\ast , \boldsymbol{x}_{\text{obs}}) < \epsilon_{g-1}$
+    - Store $\boldsymbol{\theta}_k^g = \boldsymbol{\theta}^{\ast}$
+  - Create a new threshold $\epsilon_g \le \epsilon_{g-1} $ and a new population by discarding particles with $\mathcal{D}(\boldsymbol{x}_k^g  , \boldsymbol{x}_{\text{obs}}) \ge \epsilon_{g}$ until the effective sample size is $K / 2$
+  - Weight each particle by $w_k^g \propto \pi(\boldsymbol{\theta}_k^g) / \pi_{g-1}( \boldsymbol{\theta}_k^g \mid \boldsymbol{x}_{\text{obs}} )$
+  - Create a KDE $\pi_g(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$ based on the surviving $( \boldsymbol{\theta}_k^g , w_k^g )$ particles
+
+## Code demonstration
+
+<center>
+<a href="https://asciinema.org/a/Yq3kMPrzuqMbUJJPs5uVN8OeY?size=big" target="_blank">
+<img data-lazy-loaded="" style="width:100%" data-src="https://asciinema.org/a/Yq3kMPrzuqMbUJJPs5uVN8OeY.svg">
+</a>
+</center>
+
+## Cost (2021)
+
+| Example      | Time           | Cost          |
+|--------------|----------------|---------------|
+| Dependent    | 45 s           | 3.5 ¢         |
+| Censored     | 141 s          | 11.1 ¢        |
+| Misspecified | 40 s           | 3.2 ¢         |
+| Time-varying | ~~780 s~~          | ~~61.6 ¢~~       |
+| Bivariate    | ~~269 s~~          | ~~21 ¢~~          |
+| TOTAL:       | ~~21.25 m~~ 3.76 m | ~~$1.004~~ 17.8 ¢ |
+
+On AWS c6g.16xlarge instance (64 ARM cores)
