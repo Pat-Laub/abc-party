@@ -31,11 +31,13 @@ execute:
 ::: columns
 ::: {.column width="65%"}
 
+<br>
+
 - Software engineer & maths (UQ)
-- PhD in computational applied probability (Aarhus)
-- Actuarial science post-doc (Lyon)
-- Research software engineer (Uni Melbourne)
-- Actuarial science lecturer (UNSW)
+- PhD in probability (Aarhus)
+- Post-doc (ISFA Lyon)
+- RSE (Uni Melbourne)
+- Lecturer (UNSW)
 
 :::
 ::: {.column width="35%"}
@@ -44,8 +46,6 @@ execute:
 
 :::
 :::
-
-![](typical_cond_int2.svg){.absolute bottom=0 left=150 width="350"}
 
 ::: footer
 Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
@@ -65,13 +65,29 @@ Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
 
 Packages: _approxbayescomp_ for Python & R.
 
+## Insurance Motivation
+
+Have a random number of claims $N \sim p_N( \,\cdot\, ; \boldsymbol{\theta}_{\mathrm{freq}} )$.
+
+Random claim sizes $U_1, \dots, U_N \sim f_U( \,\cdot\, ; \boldsymbol{\theta}_{\mathrm{sev}} )$.
+
+We aggregate them somehow, like:
+
+- aggregate claims: $X = \sum_{i=1}^N U_i$
+- maximum claims: $X = \max_{i=1}^N U_i$
+- stop-loss: $X = ( \sum_{i=1}^N U_i - c )_+$.
+
+__Question__: Given a sample $X_1, \dots, X_n$ of the summaries, what is the $\boldsymbol{\theta} = (\boldsymbol{\theta}_{\mathrm{freq}}, \boldsymbol{\theta}_{\mathrm{sev}})$ which explains them?
+
+E.g. a reinsurance contract
+
 ## Statistics with likelihoods
 
-For simple models we can write down the likelihood.
+We can only find the likelihood for simple models.
 
-When simple rv's are combined, the resulting thing rarely has a tractable likelihood.
+$$ X_1, X_2 \overset{\mathrm{i.i.d.}}{\sim} f_X(\,\cdot\,) $$
 
-$$ X_1, X_2 \overset{\mathrm{i.i.d.}}{\sim} f_X(\,\cdot\,) \Rightarrow X_1 + X_2 \sim ~ \texttt{Intractable likelihood}! $$
+$$ \Rightarrow X_1 + X_2 \sim ~ \texttt{Intractable likelihood}! $$
 
 . . .
 
@@ -93,29 +109,13 @@ QR CODE HERE
 
 <br>
 
-[https://pat-laub.github.io/party-game](https://pat-laub.github.io/party-game)
+[https://pat-laub.github.io/abc-party/game](https://pat-laub.github.io/abc-party/game)
 
 </center>
 
 {{< include _coin-flip-animations.qmd >}}
 
-# Insurance & Theory {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
-
-## Insurance Motivation
-
-Have a random number of claims $N \sim p_N( \,\cdot\, ; \boldsymbol{\theta}_{\mathrm{freq}} )$.
-
-Random claim sizes $U_1, \dots, U_N \sim f_U( \,\cdot\, ; \boldsymbol{\theta}_{\mathrm{sev}} )$.
-
-We aggregate them somehow, like:
-
-- aggregate claims: $X = \sum_{i=1}^N U_i$
-- maximum claims: $X = \max_{i=1}^N U_i$
-- stop-loss: $X = ( \sum_{i=1}^N U_i - c )_+$.
-
-__Question__: Given a sample $X_1, \dots, X_n$ of the summaries, what is the $\boldsymbol{\theta} = (\boldsymbol{\theta}_{\mathrm{freq}}, \boldsymbol{\theta}_{\mathrm{sev}})$ which explains them?
-
-E.g. a reinsurance contract
+# Theory {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
 
 ## Does it work in theory? {.smaller}
 
@@ -157,7 +157,7 @@ $$ \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}}) = \begin{cases}
             \end{cases}
 $$
 
-# In Practice {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
+# Practice {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
 
 ## ABC Sequential Monte Carlo {.smaller}
 
