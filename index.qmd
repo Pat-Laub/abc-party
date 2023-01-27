@@ -1,6 +1,7 @@
 ---
 title: Approximate Bayesian Computation and Insurance
-author: Dr Patrick Laub <br> Joint work with Dr Pierre-Olivier Goffard
+subtitle: PARTY Valencia
+author: Dr Patrick Laub
 date: 3 February 2023
 date-format: long
 format:
@@ -57,11 +58,9 @@ Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
 Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
 :::
 
-## 
+## {data-visibility="uncounted"}
 
 ![Our IME paper](abstract.png)
-
-Packages: _approxbayescomp_ for Python & R.
 
 ## Insurance Motivation
 
@@ -109,7 +108,7 @@ _Usually it's still possible to simulate these things..._
 
 {{< include _coin-flip-animations.qmd >}}
 
-# In Theory {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
+# In Theory & In Practice {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
 
 ## Does it work in theory? {.smaller}
 
@@ -123,9 +122,13 @@ then for each $\boldsymbol{\theta} \in \boldsymbol{\Theta}$
 
 $$ \lim_{\epsilon \to 0} \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) . $$
 
+::: {.absolute top=380 left=1000}
+$\square$
+:::
+
 We sample the _approximate_/_ABC posterior_.
 
-$$ \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \propto \pi(\theta) \times \mathbb{P}\bigl( \lVert \boldsymbol{x}_{\text{obs}}-\boldsymbol{x}^{\ast} \rVert \leq \epsilon \text{ where } \boldsymbol{x}^{\ast} \sim \boldsymbol{\theta} \bigr) , $$
+$$ \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \propto \pi(\theta) \times \mathbb{P}\bigl( \mathcal{D}\bigl(\boldsymbol{x}_{\text{obs}}, \boldsymbol{x}^{\ast} \bigr) \leq \epsilon \text{ where } \boldsymbol{x}^{\ast} \sim \boldsymbol{\theta} \bigr) , $$
 
 but we care about the true posterior $\pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$.
 
@@ -151,12 +154,9 @@ $$ \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}}) = \begin{cases}
             \end{cases}
 $$
 
-# In Practice {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
-
 ## ABC Sequential Monte Carlo {.smaller}
 
-- Input: data $\boldsymbol{x}_{\text{obs}}$, prior $\pi(\boldsymbol{\theta})$, distance $\mathcal{D}(\cdot,\cdot)$
-            # of generations $G$, # of particles $K$
+- Input: data $\boldsymbol{x}_{\text{obs}}$, prior $\pi(\boldsymbol{\theta})$, distance $\mathcal{D}(\cdot,\cdot)$, # of generations $G$, # of particles $K$
 - Start with $\epsilon_0 = \infty$,  $\pi_0(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta})$
 - For each generation $g = 1$ to $G$
   - For each particle $k = 1$ to $K$
@@ -165,19 +165,111 @@ $$
       - Generate fake data $\boldsymbol{x}^{\ast}$ from $\boldsymbol{\theta}^{\ast}$
       - Stop when $\mathcal{D}(\boldsymbol{x}^\ast , \boldsymbol{x}_{\text{obs}}) < \epsilon_{g-1}$
     - Store $\boldsymbol{\theta}_k^g = \boldsymbol{\theta}^{\ast}$
-  - Create a new threshold $\epsilon_g \le \epsilon_{g-1} $ and a new population by discarding particles with $\mathcal{D}(\boldsymbol{x}_k^g  , \boldsymbol{x}_{\text{obs}}) \ge \epsilon_{g}$ until the effective sample size is $K / 2$
+  - Create a new threshold $\epsilon_g \le \epsilon_{g-1}$ and a new population by discarding particles with $\mathcal{D}(\boldsymbol{x}_k^g  , \boldsymbol{x}_{\text{obs}}) \ge \epsilon_{g}$ until the effective sample size is $K / 2$
   - Weight each particle by $w_k^g \propto \pi(\boldsymbol{\theta}_k^g) / \pi_{g-1}( \boldsymbol{\theta}_k^g \mid \boldsymbol{x}_{\text{obs}} )$
   - Create a KDE $\pi_g(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$ based on the surviving $( \boldsymbol{\theta}_k^g , w_k^g )$ particles
 
-## Code demonstration
+# Examples {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
 
-<center>
-<a href="https://asciinema.org/a/Yq3kMPrzuqMbUJJPs5uVN8OeY?size=big" target="_blank">
-<img data-lazy-loaded="" style="width:100%" data-src="https://asciinema.org/a/Yq3kMPrzuqMbUJJPs5uVN8OeY.svg">
-</a>
-</center>
+## Dependent random sums 
 
-## Cost (2021)
+::: {.smaller}
+$$
+N \sim \mathsf{Poisson}(\lambda), 
+\quad U_i \mid N \sim \mathsf{Exp}(\beta\times \mathrm{e}^{\delta N}),
+\quad X = \sum_{i=1}^N U_i.
+$$
+:::
+
+![Posteriors for $\lambda$, $\beta$, and $\delta$ with <span style="color:rgb(31, 119, 180);">50 sums</span> and <span style="color:rgb(44, 160, 44);">250 sums</span>.](hist-test2-poisson-depexp.svg)
+
+::: {.absolute top=230 left=200}
+$\lambda$
+:::
+
+::: {.absolute top=230 left=500}
+$\beta$
+:::
+
+::: {.absolute top=230 left=800}
+$\delta$
+:::
+
+::: footer
+J. Garrido, C. Genest, and J. Schulz (2016), _Generalized linear models for dependent frequency and severity of insurance claims_, IME.
+:::
+
+## Dependent random sums code
+
+<br>
+
+``` python
+import approxbayescomp as abc
+ 
+# Load data to fit
+obsData = ...
+ 
+# Frequency-Loss Model
+freq = "poisson"
+sev = "frequency dependent exponential"
+psi = abc.Psi("sum") # Aggregation process
+ 
+# Fit the model to the data using ABC
+prior = abc.IndependentUniformPrior([(0, 10), (0, 20), (-1, 1)])
+model = abc.Model(freq, sev, psi, prior)
+fit = abc.smc(numIters, popSize, obsData, model)
+```
+
+## Time-varying arrival rate {data-visibility="uncounted"}
+
+$$\lambda(t) = a+b[1+\sin(2\pi c t)]$$
+
+![Intensity](cyclical_poisson_lognormal_data.svg)
+![](legend-cyclical.svg)
+
+## Time-varying example {data-visibility="uncounted"}
+
+::: {.smaller}
+Sizes are $U_i \sim \mathsf{Lognormal}(\mu, \sigma)$, observe $X_s = \sum_{i = N_{s-1}}^{N_{s}}U_i$.
+:::
+
+::: {.absolute top=150 left=100}
+$a$
+:::
+
+::: {.absolute top=150 left=350}
+$b$
+:::
+
+::: {.absolute top=150 left=550}
+$c$
+:::
+
+::: {.absolute top=150 left=800}
+$\mu$
+:::
+
+::: {.absolute top=150 left=1000}
+$\sigma$
+:::
+
+
+![Posteriors for $a$, $b$, $c$, $\mu$, and $\sigma$ with <span style="color:rgb(31, 119, 180);">50 sums</span> and <span style="color:rgb(44, 160, 44);">250 sums</span>.](hist-cyclical-poisson-lnorm-curve_matching.svg)
+   
+## Python package
+
+<iframe src="https://pat-laub.github.io/approxbayescomp/" width="100%" height="600" style="border:none;"></iframe>
+
+## R package
+
+
+<iframe src="https://pat-laub.github.io/approxbayescomp-r/" width="100%" height="600" style="border:none;"></iframe>
+
+::: footer
+A rough draft of C++ implementation: [https://github.com/Pat-Laub/cppabc](https://github.com/Pat-Laub/cppabc).
+:::
+
+<!-- ## Cost (2021)
 
 | Example      | Time           | Cost          |
 |--------------|----------------|---------------|
@@ -188,4 +280,4 @@ $$
 | Bivariate    | ~~269 s~~          | ~~21 ¢~~          |
 | TOTAL:       | ~~21.25 m~~ 3.76 m | ~~$1.004~~ 17.8 ¢ |
 
-On AWS c6g.16xlarge instance (64 ARM cores)
+On AWS c6g.16xlarge instance (64 ARM cores) -->
