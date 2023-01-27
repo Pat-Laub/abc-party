@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ABC PARTY Game</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <!-- Add some basic styles to the page -->
+        <style>
+            .container {
+                width: 500px;
+                margin: 0 auto;
+            }
+            h1 {
+                text-align: center;
+            }
+            p {
+                font-size: 1.2em;
+            }
+            #output, #outcome {
+                font-size: 1.5em;
+                font-weight: bold;
+            }
+        </style>
+
+        <!-- Add some colour to the page -->
+        <style>
+            body {
+                background-color: #f2f2f2;
+            }
+            .container {
+                background-color: #ffffff;
+                border: 1px solid #cccccc;
+                border-radius: 5px;
+                padding: 20px;
+            }
+            h1 {
+                color: #ffffff;
+                background-color: #337ab7;
+                border-radius: 5px;
+                padding: 10px;
+            }
+            p {
+                color: #333333;
+            }
+            #output, #outcome {
+                /* color: #ffffff;
+                background-color: #337ab7; */
+                border-radius: 5px;
+                padding: 10px;
+            }
+            
+        </style>
+
+        <!-- A basic HTML page which contains the following:
+    - A title, saying 'ABC PARTY Game'
+    - A slider which ranges between 0 and 1 (in steps of 0.01)
+    - A pair of radio buttons which say '3' or '8'.
+    - A button which says 'Flip'.
+    - An output area which will be updated by Javascript -->
+        <div class="container">
+            <h1>ABC PARTY Game</h1>
+            <p>Choose a bias for heads for your coin between 0 and 1.
+                Then choose how many coin flips to make.
+                Then click 'Flip'!</p>
+            
+            <!-- Add Javascript to store the number of coin flips made so far (default to 0) -->
+            <script>
+                var number_of_flips_made = 0;
+
+                // Make a function which resets the state of the page, i.e.
+                // it sets number_of_flips_made to 0, and clears the output area and the flip-number span.
+                function reset() {
+                    number_of_flips_made = 0;
+                    $("#output").html("");
+                    $("#output").css("visibility", "hidden");
+                    $("#outcome").html("");
+                    $("#flip-number").html("<br>");
+                }
+            </script>
+
+            <!-- Add a slider to choose the number of players (defaulting to 1, max of 5)
+                The selected value is shown after the slider as soon as the slider is moved.
+            -->
+            <p>
+                Number of players: <input type="range" id="number_of_players" min="1" max="5" step="1" value="1">
+                <span id="number_of_players_value">1</span>
+
+                <script>
+                    // Javascript code which will be executed when the slider is moved.
+                    // It will read the value of the slider, and then update the 'number_of_players_value' span.
+                    $("#number_of_players").on("input", function() {
+                        $("#number_of_players_value").html($(this).val());
+                        reset();
+                    });
+                </script>
+            </p>
+
+            <!-- A slider to choose the bias ranges between 0 and 1 (in steps of 0.01).
+                The selected value is shown after the slider as soon as the slider is moved. 
+            -->
+            <p>
+                Bias: <input type="range" id="number" min="0" max="1" step="0.01" value="0.5">
+                <span id="number_value">0.5</span>
+            </p>
+            <script>
+                // Javascript code which will be executed when the slider is moved.
+                // It will read the value of the slider, and then update the 'number_value' span.
+                $("#number").on("input", function() {
+                    $("#number_value").html($(this).val());
+                    reset();
+                });
+            </script>
+            
+            <p>Number of coin flips:
+                <!-- The user chooses either between 3 of 8 flips; call 'reset' Javascript function on change -->
+                <input type="radio" name="number_of_flips" value="3" checked onclick="reset()">3
+                <input type="radio" name="number_of_flips" value="5" onclick="reset()">5
+                <input type="radio" name="number_of_flips" value="8" onclick="reset()">8
+
+            </p>
+            
+            <p>
+                <!-- Add a big centered button to say "Flip" -->
+                <button type="button" id="flip" class="btn btn-primary btn-lg btn-block">Flip</button>
+                
+            </p>
+            <p>
+                <span id="flip-number"><br></span>
+            </p>
+          
+            <p id="output" style="visibility: hidden;"></p>
+            
+            <p>
+                <!-- Add a checkbox to say "Check for approximate matches"; when pressed the 'check_for_matches' function is called -->
+                <input type="checkbox" id="approximate_matches" onclick="check_for_matches()">Check for approximate matches
+                
+            </p>
+
+            <p id="outcome"></p>
+        </div>
+        <script>
+            function check_for_matches() {
+                var number_of_players = $("#number_of_players").val();
+                var number_of_flips = $("input[name='number_of_flips']:checked").val();
+                
+                 // If 'number_of_flips' is 3, and a player gets "H T H" then they win.
+                // If 'number_of_flips' is 5, and a player gets "H T H H T" then they win.
+                // If 'number_of_flips' is 8, and a player gets "H T H T H H T H" then they win.
+                // If there's no winner, then output "No winner :("
+                var output = $("#output").html();
+
+                if (output == "") {
+                    return;
+                }
+
+                var outcome = ""
+                var winning_outcomes = {
+                    "3": "H T H",
+                    "5": "H T H H T",
+                    "8": "H T H T H H T H"
+                };
+
+                var winning_outcome = winning_outcomes[number_of_flips];
+
+                var number_of_winners = 0;
+
+                for (var player = 1; player <= number_of_players; player++) {
+                    if (output.includes("Player " + player + ": " + winning_outcome)) {
+                        outcome += "🎉 Player " + player + ": Wins! 🎉<br>";
+                        number_of_winners += 1;
+                    } else if ($("#approximate_matches").is(":checked")) {
+                        // If the 'check approximate matches' checkbox is ticked, and the player
+                        // has same number of heads as the winning_outcome (or one less or one more)
+                        // then output "Player X: You were close!"
+
+                        // Read the output variable, and get the string between "Player X: " and the next "<br>"
+                        var player_outcome = output.match("Player " + player + ": ([^<]*)")[1];
+
+                        var match_heads = player_outcome.match(/H/g);
+                        var player_heads = match_heads ? match_heads.length : 0;
+
+                        var target_match_heads = winning_outcome.match(/H/g);
+                        var winning_heads = target_match_heads ? target_match_heads.length : 0;
+                        if (Math.abs(player_heads - winning_heads) <= 1) { // 👍
+                            outcome += "🎉 Player " + player + ": You were close enough! 🎉<br>";
+                            number_of_winners += 1;
+                        }
+                    }
+                }
+
+                if (number_of_winners == 0) {
+                    outcome = "No winners 😢"
+                }
+
+                $("#outcome").html(outcome);
+            }
+
+            // Javascript code which will be executed when the 'flip' button is clicked.
+            // It will read the bias and number of coin flips from the HTML page,
+            // and then use these to simulate multiple coin flips.
+            // It will then update the output area with the result.
+            $("#flip").click(function() {
+                // Add one to number_of_flips_made and update "flip-number" span to read: "Flip #: X"
+                number_of_flips_made += 1;
+                $("#flip-number").html("Outcome of attempt # " + number_of_flips_made + ":");
+
+                // Read the number of players from the slider
+                var number_of_players = $("#number_of_players").val();
+                var number_of_flips = $("input[name='number_of_flips']:checked").val();                 
+                var bias = $("#number").val();
+               
+                var output = "";
+                // For each player in 1 to number_of_players
+                for (var player = 1; player <= number_of_players; player++) {
+                    // Simulate 'number_of_flips' biased coin flips,
+                    // then output in the form: "Player 3: H T H".
+                    output += "Player " + player + ": ";
+                    
+                    for (var i = 0; i < number_of_flips; i++) {
+                        var result = Math.random() < bias ? "H" : "T";
+                        output += result + " ";
+                    }
+                    output += "<br>";
+                }
+                $("#output").html(output);
+                $("#output").css("visibility", "visible");
+
+                check_for_matches();
+            }); 
+        </script>
+
+    </body>
+</html>
