@@ -24,23 +24,21 @@ execute:
   echo: true
 ---
 
-# 
+# {.smaller}
 
-<h2>About me</h2>
+<h2 >About me</h2>
 
 ::: columns
-::: {.column width="65%"}
+::: {.column width="70%"}
 
-<br>
+- PhD @ Aarhus University & University of Queensland
+- Post-docs @ ISFA Lyon & University of Melbourne
+- Lecturer, UNSW
 
-- Software engineer & maths (UQ)
-- PhD in probability (Aarhus)
-- Post-doc (ISFA Lyon)
-- RSE (Uni Melbourne)
-- Lecturer (UNSW)
+![Empirical Dynamic Modelling](edm.svg)
 
 :::
-::: {.column width="35%"}
+::: {.column width="30%"}
 
 ![](hawkes-book-cover.jpeg)
 
@@ -99,15 +97,11 @@ or just takes a long time to compute, then $\texttt{Intractable}$ $\texttt{Likel
 
 _Usually it's still possible to simulate these things..._
 
-# Approximate Bayesian Computation {background-image="unsw-yellow-shape.png"}
+# ABC Game {background-image="unsw-yellow-shape.png"}
 
 <center>
 
-<br>
-
-QR CODE HERE
-
-<br>
+<img src="qr-code.png" height="400px"/>
 
 [https://pat-laub.github.io/abc-party/game](https://pat-laub.github.io/abc-party/game)
 
@@ -115,7 +109,7 @@ QR CODE HERE
 
 {{< include _coin-flip-animations.qmd >}}
 
-# Theory {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
+# In Theory {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
 
 ## Does it work in theory? {.smaller}
 
@@ -157,7 +151,7 @@ $$ \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}}) = \begin{cases}
             \end{cases}
 $$
 
-# Practice {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
+# In Practice {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
 
 ## ABC Sequential Monte Carlo {.smaller}
 
