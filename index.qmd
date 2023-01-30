@@ -52,14 +52,6 @@ Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
 
 ## {data-visibility="uncounted"}
 
-<iframe src="https://pat-laub.github.io/DeepLearningForActuaries/" width="100%" height="700" style="border:none;"></iframe>
-
-::: footer
-Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
-:::
-
-## {data-visibility="uncounted"}
-
 ![Our IME paper](abstract.png)
 
 ## Insurance Motivation
@@ -281,3 +273,35 @@ A rough draft of C++ implementation: [https://github.com/Pat-Laub/cppabc](https:
 | TOTAL:       | ~~21.25 m~~ 3.76 m | ~~$1.004~~ 17.8 ¢ |
 
 On AWS c6g.16xlarge instance (64 ARM cores) -->
+
+
+## {data-visibility="uncounted"}
+
+<iframe src="https://pat-laub.github.io/DeepLearningForActuaries/" width="100%" height="700" style="border:none;"></iframe>
+
+::: footer
+Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
+:::
+
+
+#
+
+<h2>Get involved!</h2>
+
+::: columns
+::: {.column width="60%"}
+
+😊 Give it a try, feedback would be very welcome.
+
+😍 We'd love contributions! 
+
+
+<iframe src="https://pat-laub.github.io/DeepLearningForActuaries/" width="100%" height="400" style="border:none;"></iframe>
+
+:::
+::: {.column width="40%"}
+
+![[Deep Learning For Actuaries](https://pat-laub.github.io/DeepLearningForActuaries/)](deep-learning-slides-qr-code.svg)
+
+:::
+:::
