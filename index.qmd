@@ -77,7 +77,7 @@ What is $\theta = \mathbb{P}(\text{Heads})$?
 
 {{< include _coin-flip-animations.qmd >}}
 
-# Insurance
+# Insurance {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
 
 ![Our IME paper](abstract.png)
 
@@ -115,9 +115,11 @@ or just takes a long time to compute, then $\texttt{Intractable}$ $\texttt{Likel
 
 _Usually it's still possible to simulate these things..._
 
-# In Theory & In Practice {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
+<!-- # In Theory & In Practice {data-visibility="uncounted" background-image="unsw-yellow-shape.png"} -->
 
-## Does it work in theory? {.smaller}
+# {.smaller}
+
+<h2>Does it work in theory?</h2>
 
 __Proposition__: Say we have continuous data $\boldsymbol{x}_{\text{obs}}$, and our prior $\pi(\boldsymbol{\theta})$ has bounded support.
 
@@ -176,9 +178,11 @@ $$
   - Weight each particle by $w_k^g \propto \pi(\boldsymbol{\theta}_k^g) / \pi_{g-1}( \boldsymbol{\theta}_k^g \mid \boldsymbol{x}_{\text{obs}} )$
   - Create a KDE $\pi_g(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$ based on the surviving $( \boldsymbol{\theta}_k^g , w_k^g )$ particles
 
-# Examples {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
+<!-- # Examples {data-visibility="uncounted" background-image="unsw-yellow-shape.png"} -->
 
-## Dependent random sums 
+#
+
+<h2>Dependent random sums</h2>
 
 ::: {.smaller}
 $$
@@ -263,7 +267,9 @@ $\sigma$
 
 ![Posteriors for $a$, $b$, $c$, $\mu$, and $\sigma$ with <span style="color:rgb(31, 119, 180);">50 sums</span> and <span style="color:rgb(44, 160, 44);">250 sums</span>.](hist-cyclical-poisson-lnorm-curve_matching.svg)
    
-## Python package
+# 
+
+<h2>Python package</h2>
 
 <iframe src="https://pat-laub.github.io/approxbayescomp/" width="100%" height="600" style="border:none;"></iframe>
 
@@ -276,31 +282,19 @@ $\sigma$
 A rough draft of C++ implementation: [https://github.com/Pat-Laub/cppabc](https://github.com/Pat-Laub/cppabc).
 :::
 
-<!-- ## Cost (2021)
+## Stats problem $\to$ computer problem
 
-| Example      | Time           | Cost          |
-|--------------|----------------|---------------|
-| Dependent    | 45 s           | 3.5 ¢         |
-| Censored     | 141 s          | 11.1 ¢        |
-| Misspecified | 40 s           | 3.2 ¢         |
-| Time-varying | ~~780 s~~          | ~~61.6 ¢~~       |
-| Bivariate    | ~~269 s~~          | ~~21 ¢~~          |
-| TOTAL:       | ~~21.25 m~~ 3.76 m | ~~$1.004~~ 17.8 ¢ |
+::: {.r-stack}
+![](mac-mini.png)
 
-On AWS c6g.16xlarge instance (64 ARM cores) -->
-
-
-## {data-visibility="uncounted"}
-
-<iframe src="https://pat-laub.github.io/DeepLearningForActuaries/" width="100%" height="700" style="border:none;"></iframe>
-
-::: footer
-Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
+![](aws.png){.fragment}
 :::
 
+. . .
+
+> "Easier to throw more computers at the problem than more brains" Hadley Wickham
 
 # {.smaller}
-
 
 <h2>Get involved!</h2>
 
