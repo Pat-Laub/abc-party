@@ -66,7 +66,7 @@
             <p>This page virtually flips a coin which can be biased towards heads of tails.</p>
             <p><strong>Instructions:</strong>
                 <ol>
-                    <li>Choose how many people are playing on your device</li>
+                    <li>Choose how many players on your device</li>
                     <li>Choose a bias for heads for your coin</li>
                     <li>Choose the number of coin flips to make</li>
                     <li>Click Flip</li>
@@ -76,6 +76,12 @@
             <!-- Add Javascript to store the number of coin flips made so far (default to 0) -->
             <script>
                 var number_of_flips_made = 0;
+                
+                var winning_outcomes = {
+                    "3": "H T H",
+                    "5": "H T H H T",
+                    "8": "H T H T H H T H"
+                };
 
                 // Make a function which resets the state of the page, i.e.
                 // it sets number_of_flips_made to 0, and clears the output area and the flip-number span.
@@ -85,16 +91,43 @@
                     $("#output").css("visibility", "hidden");
                     $("#outcome").html("");
                     $("#flip-number").html("<br>");
+
+                    // Look up the value of 'number_of_flips', and update
+                    // the 'target' to be the relevant value from 'winning_outcomes'
+                    var number_of_flips = $("input[name='number_of_flips']:checked").val();
+                    $("#target").html(winning_outcomes[number_of_flips]);
                 }
+                
             </script>
 
             <!-- Add a slider to choose the number of players (defaulting to 1, max of 5)
                 The selected value is shown after the slider as soon as the slider is moved.
             -->
             <p>
-                Number of players: <input type="range" id="number_of_players" min="1" max="5" step="1" value="1">
+                No. of players: <input type="range" id="number_of_players" min="1" max="5" step="1" value="1">
                 <span id="number_of_players_value">1</span>
 
+                <!-- Update the sliders to be 200px when the page width is over 450 -->
+                <style>
+                    @media (min-width: 450px) {
+                        #number_of_players {
+                            width: 200px;
+                            display: inline;
+                        }
+                        #number {
+                            width: 200px;
+                            display: inline;
+                        }
+                    }
+                    @media (max-width: 450px) {
+                        #number_of_players {
+                            display: block;
+                        }
+                        #number {
+                            display: block;
+                        }
+                    }
+                </style>
                 <script>
                     // Javascript code which will be executed when the slider is moved.
                     // It will read the value of the slider, and then update the 'number_of_players_value' span.
@@ -134,6 +167,8 @@
                 <button type="button" id="flip" class="btn btn-primary btn-lg btn-block">Flip</button>
                 
             </p>
+            <p>You're trying to get: <strong><span id="target"></span></strong></p>
+
             <p>
                 <span id="flip-number"><br></span>
             </p>
@@ -164,12 +199,7 @@
                 }
 
                 var outcome = ""
-                var winning_outcomes = {
-                    "3": "H T H",
-                    "5": "H T H H T",
-                    "8": "H T H T H H T H"
-                };
-
+     
                 var winning_outcome = winning_outcomes[number_of_flips];
 
                 var number_of_winners = 0;
@@ -236,7 +266,9 @@
                 $("#output").css("visibility", "visible");
 
                 check_for_matches();
-            }); 
+            });
+
+            reset();
         </script>
 
     </body>
