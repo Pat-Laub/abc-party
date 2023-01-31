@@ -25,32 +25,59 @@ execute:
   echo: true
 ---
 
-# {.smaller}
+# 
 
-<h2 >About me</h2>
+<h2>What is the bias?</h2>
+
+We flip a coin three times and get:
 
 ::: columns
-::: {.column width="70%"}
+::: {.column width="33%"}
 
-- PhD @ Aarhus University & University of Queensland
-- Post-docs @ ISFA Lyon & University of Melbourne
-- Lecturer, UNSW
-
-![Empirical Dynamic Modelling](edm.svg)
+![**Heads**](aud-heads.jpeg)
 
 :::
-::: {.column width="30%"}
+::: {.column width="33%"}
 
-![](hawkes-book-cover.jpeg)
+![**Tails**](aud-tails.jpeg)
+:::
+::: {.column width="33%"}
+
+![**Heads**](aud-heads.jpeg)
 
 :::
 :::
 
-::: footer
-Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
+What is $\theta = \mathbb{P}(\text{Heads})$?
+
+## Bayesian approach
+
+::: columns
+::: column
+![Prior](coin-prior.png)
+:::
+::: column
+
+<iframe width="560" height="280" src="https://www.youtube.com/embed/P6pugawb7SM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="280" src="https://www.youtube.com/embed/tuXXubOkFuY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+:::
 :::
 
-## {data-visibility="uncounted"}
+## Let's flip coins
+
+<center>
+
+<img src="qr-code.png" height="400px"/>
+
+[https://pat-laub.github.io/abc-party/game](https://pat-laub.github.io/abc-party/game)
+
+</center>
+
+{{< include _coin-flip-animations.qmd >}}
+
+# Insurance
 
 ![Our IME paper](abstract.png)
 
@@ -87,18 +114,6 @@ or just takes a long time to compute, then $\texttt{Intractable}$ $\texttt{Likel
 . . .
 
 _Usually it's still possible to simulate these things..._
-
-# ABC Game {background-image="unsw-yellow-shape.png"}
-
-<center>
-
-<img src="qr-code.png" height="400px"/>
-
-[https://pat-laub.github.io/abc-party/game](https://pat-laub.github.io/abc-party/game)
-
-</center>
-
-{{< include _coin-flip-animations.qmd >}}
 
 # In Theory & In Practice {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
 
@@ -284,24 +299,38 @@ Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
 :::
 
 
-#
+# {.smaller}
+
 
 <h2>Get involved!</h2>
 
+
 ::: columns
-::: {.column width="60%"}
+::: {.column width="55%"}
 
 😊 Give it a try, feedback would be very welcome.
 
 😍 We'd love contributions! 
 
+![Empirical Dynamic Modelling](edm.svg)
 
-<iframe src="https://pat-laub.github.io/DeepLearningForActuaries/" width="100%" height="400" style="border:none;"></iframe>
-
-:::
-::: {.column width="40%"}
-
-![[Deep Learning For Actuaries](https://pat-laub.github.io/DeepLearningForActuaries/)](deep-learning-slides-qr-code.svg)
+Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
 
 :::
+::: {.column width="45%"}
 :::
+:::
+
+::: {.absolute top=-25 right=100 width=300}
+![](hawkes-book-cover.jpeg)
+:::
+
+::: {.absolute top=450 right=0 width=500}
+![Deep Learning for Actuaries](autoencoder.svg)
+:::
+
+
+## {data-visibility="uncounted"}
+
+
+<iframe src="https://pat-laub.github.io/DeepLearningForActuaries/" width="100%" height="700" style="border:none;"></iframe>
