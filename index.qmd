@@ -26,6 +26,10 @@ execute:
   echo: true
 ---
 
+## {data-visibility="uncounted"}
+
+![Our IME paper](abstract.png)
+
 # 
 
 <h2>What is the bias?</h2>
@@ -51,6 +55,7 @@ We flip a coin three times and get:
 
 What is $\theta = \mathbb{P}(\text{Heads})$?
 
+<!-- 
 ## Bayesian approach
 
 ::: columns
@@ -65,6 +70,8 @@ What is $\theta = \mathbb{P}(\text{Heads})$?
 
 :::
 :::
+-->
+
 
 ## Let's flip coins
 
@@ -78,27 +85,9 @@ What is $\theta = \mathbb{P}(\text{Heads})$?
 
 {{< include _coin-flip-animations.qmd >}}
 
-# Insurance {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
+#
 
-![Our IME paper](abstract.png)
-
-## Insurance Motivation
-
-Have a random number of claims $N \sim p_N( \,\cdot\, ; \boldsymbol{\theta}_{\mathrm{freq}} )$.
-
-Random claim sizes $U_1, \dots, U_N \sim f_U( \,\cdot\, ; \boldsymbol{\theta}_{\mathrm{sev}} )$.
-
-We aggregate them somehow, like:
-
-- aggregate claims: $X = \sum_{i=1}^N U_i$
-- maximum claims: $X = \max_{i=1}^N U_i$
-- stop-loss: $X = ( \sum_{i=1}^N U_i - c )_+$.
-
-__Question__: Given a sample $X_1, \dots, X_n$ of the summaries, what is the $\boldsymbol{\theta} = (\boldsymbol{\theta}_{\mathrm{freq}}, \boldsymbol{\theta}_{\mathrm{sev}})$ which explains them?
-
-E.g. a reinsurance contract
-
-## Statistics with likelihoods
+<h2>Statistics with likelihoods</h2>
 
 We can only find the likelihood for simple models.
 
@@ -116,74 +105,25 @@ or just takes a long time to compute, then $\texttt{Intractable}$ $\texttt{Likel
 
 _Usually it's still possible to simulate these things..._
 
-<!-- # In Theory & In Practice {data-visibility="uncounted" background-image="unsw-yellow-shape.png"} -->
+## Insurance Motivation
 
-# {.smaller}
+Have a random number of claims $N \sim p_N( \,\cdot\, ; \boldsymbol{\theta}_{\mathrm{freq}} )$.
 
-<h2>Does it work in theory?</h2>
+Random claim sizes $U_1, \dots, U_N \sim f_U( \,\cdot\, ; \boldsymbol{\theta}_{\mathrm{sev}} )$.
 
-__Proposition__: Say we have continuous data $\boldsymbol{x}_{\text{obs}}$, and our prior $\pi(\boldsymbol{\theta})$ has bounded support.
+We aggregate them somehow, like:
 
-If for some $\epsilon \ge 0$ we have
+- aggregate claims: $X = \sum_{i=1}^N U_i$
+- maximum claims: $X = \max_{i=1}^N U_i$
+- stop-loss: $X = ( \sum_{i=1}^N U_i - c )_+$.
 
-$$ \sup\limits_{ (\boldsymbol{z}, \boldsymbol{\theta}) : \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}} ) < \epsilon, \boldsymbol{\theta} \in \boldsymbol{ \Theta } } \pi( \boldsymbol{z} \mid \boldsymbol{ \theta }) < \infty $$
+__Question__: Given a sample $X_1, \dots, X_n$ of the summaries, what is the $\boldsymbol{\theta} = (\boldsymbol{\theta}_{\mathrm{freq}}, \boldsymbol{\theta}_{\mathrm{sev}})$ which explains them?
 
-then for each $\boldsymbol{\theta} \in \boldsymbol{\Theta}$
-
-$$ \lim_{\epsilon \to 0} \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) . $$
-
-::: {.absolute top=380 left=1000}
-$\square$
-:::
-
-We sample the _approximate_/_ABC posterior_.
-
-$$ \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \propto \pi(\theta) \times \mathbb{P}\bigl( \mathcal{D}\bigl(\boldsymbol{x}_{\text{obs}}, \boldsymbol{x}^{\ast} \bigr) \leq \epsilon \text{ where } \boldsymbol{x}^{\ast} \sim \boldsymbol{\theta} \bigr) , $$
-
-but we care about the true posterior $\pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$.
-
-::: footer
-Rubio and Johansen (2013), _A simple approach to maximum intractable likelihood estimation_, Electronic Journal of Statistics.
-:::
-
-## Mixed data
-
-We filled in some of the blanks for mixed data.
-Our data was mostly continuous data but had an atom at 0.
-
-
-
-Get
-$$ \lim_{\epsilon \to 0} \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) $$
-
-when
-
-$$ \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}}) = \begin{cases}
-            \mathcal{D}^+(\boldsymbol{z}^+, \boldsymbol{x}_{\text{obs}^+}) & \text{if } \# \text{Zeros}(\boldsymbol{z}) = \# \text{Zeros}(\boldsymbol{x}_{\text{obs}}) , \\
-            \infty & \text{otherwise}.
-            \end{cases}
-$$
-
-## ABC Sequential Monte Carlo {.smaller}
-
-- Input: data $\boldsymbol{x}_{\text{obs}}$, prior $\pi(\boldsymbol{\theta})$, distance $\mathcal{D}(\cdot,\cdot)$, # of generations $G$, # of particles $K$
-- Start with $\epsilon_0 = \infty$,  $\pi_0(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta})$
-- For each generation $g = 1$ to $G$
-  - For each particle $k = 1$ to $K$
-    - Repeatedly:
-      - Generate a guess $\boldsymbol{\theta}^{\ast}$ from $\pi_{g-1}(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$
-      - Generate fake data $\boldsymbol{x}^{\ast}$ from $\boldsymbol{\theta}^{\ast}$
-      - Stop when $\mathcal{D}(\boldsymbol{x}^\ast , \boldsymbol{x}_{\text{obs}}) < \epsilon_{g-1}$
-    - Store $\boldsymbol{\theta}_k^g = \boldsymbol{\theta}^{\ast}$
-  - Create a new threshold $\epsilon_g \le \epsilon_{g-1}$ and a new population by discarding particles with $\mathcal{D}(\boldsymbol{x}_k^g  , \boldsymbol{x}_{\text{obs}}) \ge \epsilon_{g}$ until the effective sample size is $K / 2$
-  - Weight each particle by $w_k^g \propto \pi(\boldsymbol{\theta}_k^g) / \pi_{g-1}( \boldsymbol{\theta}_k^g \mid \boldsymbol{x}_{\text{obs}} )$
-  - Create a KDE $\pi_g(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$ based on the surviving $( \boldsymbol{\theta}_k^g , w_k^g )$ particles
+E.g. a reinsurance contract
 
 <!-- # Examples {data-visibility="uncounted" background-image="unsw-yellow-shape.png"} -->
 
-#
-
-<h2>Dependent random sums</h2>
+## Dependent random sums
 
 ::: {.smaller}
 $$
@@ -295,7 +235,7 @@ A rough draft of C++ implementation: [https://github.com/Pat-Laub/cppabc](https:
 
 > "Easier to throw more computers at the problem than more brains" Hadley Wickham
 
-# {.smaller}
+## {.smaller}
 
 <h2>Get involved!</h2>
 
@@ -324,11 +264,72 @@ Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
 ![Deep Learning for Actuaries](autoencoder.svg)
 :::
 
+# Appendix {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
 
 ## {data-visibility="uncounted"}
 
-
 <iframe src="https://pat-laub.github.io/DeepLearningForActuaries/" width="100%" height="700" style="border:none;"></iframe>
+
+## {.smaller data-visibility="uncounted"}
+
+<h2>Does it work in theory?</h2>
+
+__Proposition__: Say we have continuous data $\boldsymbol{x}_{\text{obs}}$, and our prior $\pi(\boldsymbol{\theta})$ has bounded support.
+
+If for some $\epsilon \ge 0$ we have
+
+$$ \sup\limits_{ (\boldsymbol{z}, \boldsymbol{\theta}) : \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}} ) < \epsilon, \boldsymbol{\theta} \in \boldsymbol{ \Theta } } \pi( \boldsymbol{z} \mid \boldsymbol{ \theta }) < \infty $$
+
+then for each $\boldsymbol{\theta} \in \boldsymbol{\Theta}$
+
+$$ \lim_{\epsilon \to 0} \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) . $$
+
+::: {.absolute top=380 left=1000}
+$\square$
+:::
+
+We sample the _approximate_/_ABC posterior_.
+
+$$ \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \propto \pi(\theta) \times \mathbb{P}\bigl( \mathcal{D}\bigl(\boldsymbol{x}_{\text{obs}}, \boldsymbol{x}^{\ast} \bigr) \leq \epsilon \text{ where } \boldsymbol{x}^{\ast} \sim \boldsymbol{\theta} \bigr) , $$
+
+but we care about the true posterior $\pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$.
+
+::: footer
+Rubio and Johansen (2013), _A simple approach to maximum intractable likelihood estimation_, Electronic Journal of Statistics.
+:::
+
+## Mixed data {data-visibility="uncounted"}
+
+We filled in some of the blanks for mixed data.
+Our data was mostly continuous data but had an atom at 0.
+
+
+
+Get
+$$ \lim_{\epsilon \to 0} \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) $$
+
+when
+
+$$ \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}}) = \begin{cases}
+            \mathcal{D}^+(\boldsymbol{z}^+, \boldsymbol{x}_{\text{obs}^+}) & \text{if } \# \text{Zeros}(\boldsymbol{z}) = \# \text{Zeros}(\boldsymbol{x}_{\text{obs}}) , \\
+            \infty & \text{otherwise}.
+            \end{cases}
+$$
+
+## ABC Sequential Monte Carlo {.smaller data-visibility="uncounted"}
+
+- Input: data $\boldsymbol{x}_{\text{obs}}$, prior $\pi(\boldsymbol{\theta})$, distance $\mathcal{D}(\cdot,\cdot)$, # of generations $G$, # of particles $K$
+- Start with $\epsilon_0 = \infty$,  $\pi_0(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta})$
+- For each generation $g = 1$ to $G$
+  - For each particle $k = 1$ to $K$
+    - Repeatedly:
+      - Generate a guess $\boldsymbol{\theta}^{\ast}$ from $\pi_{g-1}(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$
+      - Generate fake data $\boldsymbol{x}^{\ast}$ from $\boldsymbol{\theta}^{\ast}$
+      - Stop when $\mathcal{D}(\boldsymbol{x}^\ast , \boldsymbol{x}_{\text{obs}}) < \epsilon_{g-1}$
+    - Store $\boldsymbol{\theta}_k^g = \boldsymbol{\theta}^{\ast}$
+  - Create a new threshold $\epsilon_g \le \epsilon_{g-1}$ and a new population by discarding particles with $\mathcal{D}(\boldsymbol{x}_k^g  , \boldsymbol{x}_{\text{obs}}) \ge \epsilon_{g}$ until the effective sample size is $K / 2$
+  - Weight each particle by $w_k^g \propto \pi(\boldsymbol{\theta}_k^g) / \pi_{g-1}( \boldsymbol{\theta}_k^g \mid \boldsymbol{x}_{\text{obs}} )$
+  - Create a KDE $\pi_g(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})$ based on the surviving $( \boldsymbol{\theta}_k^g , w_k^g )$ particles
 
 
 <script defer>

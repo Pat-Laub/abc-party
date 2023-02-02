@@ -406,8 +406,12 @@ Dr Patrick Laub
 
   <p class="date">February 3, 2023</p>
 </section>
+<section id="section" class="slide level2" data-visibility="uncounted">
+<h2></h2>
+
+<img data-src="abstract.png" class="r-stretch quarto-figure-center"><p class="caption">Our IME paper</p></section>
 <section>
-<section id="section" class="title-slide slide level1 center">
+<section id="section-1" class="title-slide slide level1 center">
 <h1></h1>
 <h2>
 What is the bias?
@@ -438,24 +442,6 @@ What is the bias?
 </div>
 </div>
 <p>What is <span class="math inline">\(\theta = \mathbb{P}(\text{Heads})\)</span>?</p>
-</section>
-<section id="bayesian-approach" class="slide level2">
-<h2>Bayesian approach</h2>
-<div class="columns">
-<div class="column">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="coin-prior.png"></p>
-<p></p><figcaption>Prior</figcaption><p></p>
-</figure>
-</div>
-</div><div class="column">
-<iframe width="560" height="280" src="https://www.youtube.com/embed/P6pugawb7SM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="">
-</iframe>
-<iframe width="560" height="280" src="https://www.youtube.com/embed/tuXXubOkFuY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="">
-</iframe>
-</div>
-</div>
 </section>
 <section id="lets-flip-coins" class="slide level2">
 <h2>Let’s flip coins</h2>
@@ -489,10 +475,21 @@ What is the bias?
 <p>Your browser does not support the video tag. </p>
 </video></section></section>
 <section>
-<section id="insurance" class="title-slide slide level1 center" data-visibility="uncounted" data-background-image="unsw-yellow-shape.png">
-<h1>Insurance</h1>
-
-<img data-src="abstract.png" class="r-stretch quarto-figure-center"><p class="caption">Our IME paper</p></section>
+<section id="section-2" class="title-slide slide level1 center">
+<h1></h1>
+<h2>
+Statistics with likelihoods
+</h2>
+<p>We can only find the likelihood for simple models.</p>
+<p><span class="math display">\[ X_1, X_2 \overset{\mathrm{i.i.d.}}{\sim} f_X(\,\cdot\,) \]</span></p>
+<p><span class="math display">\[ \Rightarrow X_1 + X_2 \sim ~ \texttt{Intractable likelihood}! \]</span></p>
+<div class="fragment">
+<p>Have a sample of <span class="math inline">\(n\)</span> i.i.d. observations. As <span class="math inline">\(n\)</span> increases, <span class="math display">\[ p_{\boldsymbol{X}}(\boldsymbol{x} \mid \boldsymbol{\theta}) = \prod \text{Small things} \overset{\dagger}{=} 0, \]</span> or just takes a long time to compute, then <span class="math inline">\(\texttt{Intractable}\)</span> <span class="math inline">\(\texttt{Likelihood}\)</span>!</p>
+</div>
+<div class="fragment">
+<p><em>Usually it’s still possible to simulate these things…</em></p>
+</div>
+</section>
 <section id="insurance-motivation" class="slide level2">
 <h2>Insurance Motivation</h2>
 <p>Have a random number of claims <span class="math inline">\(N \sim p_N( \,\cdot\, ; \boldsymbol{\theta}_{\mathrm{freq}} )\)</span>.</p>
@@ -506,79 +503,8 @@ What is the bias?
 <p><strong>Question</strong>: Given a sample <span class="math inline">\(X_1, \dots, X_n\)</span> of the summaries, what is the <span class="math inline">\(\boldsymbol{\theta} = (\boldsymbol{\theta}_{\mathrm{freq}}, \boldsymbol{\theta}_{\mathrm{sev}})\)</span> which explains them?</p>
 <p>E.g. a reinsurance contract</p>
 </section>
-<section id="statistics-with-likelihoods" class="slide level2">
-<h2>Statistics with likelihoods</h2>
-<p>We can only find the likelihood for simple models.</p>
-<p><span class="math display">\[ X_1, X_2 \overset{\mathrm{i.i.d.}}{\sim} f_X(\,\cdot\,) \]</span></p>
-<p><span class="math display">\[ \Rightarrow X_1 + X_2 \sim ~ \texttt{Intractable likelihood}! \]</span></p>
-<div class="fragment">
-<p>Have a sample of <span class="math inline">\(n\)</span> i.i.d. observations. As <span class="math inline">\(n\)</span> increases, <span class="math display">\[ p_{\boldsymbol{X}}(\boldsymbol{x} \mid \boldsymbol{\theta}) = \prod \text{Small things} \overset{\dagger}{=} 0, \]</span> or just takes a long time to compute, then <span class="math inline">\(\texttt{Intractable}\)</span> <span class="math inline">\(\texttt{Likelihood}\)</span>!</p>
-</div>
-<div class="fragment">
-<p><em>Usually it’s still possible to simulate these things…</em></p>
-</div>
-</section></section>
-<section>
-<section id="section-1" class="title-slide slide level1 smaller center">
-<h1></h1>
-<h2>
-Does it work in theory?
-</h2>
-<p><strong>Proposition</strong>: Say we have continuous data <span class="math inline">\(\boldsymbol{x}_{\text{obs}}\)</span>, and our prior <span class="math inline">\(\pi(\boldsymbol{\theta})\)</span> has bounded support.</p>
-<p>If for some <span class="math inline">\(\epsilon \ge 0\)</span> we have</p>
-<p><span class="math display">\[ \sup\limits_{ (\boldsymbol{z}, \boldsymbol{\theta}) : \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}} ) &lt; \epsilon, \boldsymbol{\theta} \in \boldsymbol{ \Theta } } \pi( \boldsymbol{z} \mid \boldsymbol{ \theta }) &lt; \infty \]</span></p>
-<p>then for each <span class="math inline">\(\boldsymbol{\theta} \in \boldsymbol{\Theta}\)</span></p>
-<p><span class="math display">\[ \lim_{\epsilon \to 0} \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) . \]</span></p>
-<div class="absolute" style="top: 380px; left: 1000px; ">
-<p><span class="math inline">\(\square\)</span></p>
-</div>
-<p>We sample the <em>approximate</em>/<em>ABC posterior</em>.</p>
-<p><span class="math display">\[ \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \propto \pi(\theta) \times \mathbb{P}\bigl( \mathcal{D}\bigl(\boldsymbol{x}_{\text{obs}}, \boldsymbol{x}^{\ast} \bigr) \leq \epsilon \text{ where } \boldsymbol{x}^{\ast} \sim \boldsymbol{\theta} \bigr) , \]</span></p>
-<p>but we care about the true posterior <span class="math inline">\(\pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})\)</span>.</p>
-<div class="footer">
-<p>Rubio and Johansen (2013), <em>A simple approach to maximum intractable likelihood estimation</em>, Electronic Journal of Statistics.</p>
-</div>
-</section>
-<section id="mixed-data" class="slide level2">
-<h2>Mixed data</h2>
-<p>We filled in some of the blanks for mixed data. Our data was mostly continuous data but had an atom at 0.</p>
-<p>Get <span class="math display">\[ \lim_{\epsilon \to 0} \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \]</span></p>
-<p>when</p>
-<p><span class="math display">\[ \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}}) = \begin{cases}
-            \mathcal{D}^+(\boldsymbol{z}^+, \boldsymbol{x}_{\text{obs}^+}) &amp; \text{if } \# \text{Zeros}(\boldsymbol{z}) = \# \text{Zeros}(\boldsymbol{x}_{\text{obs}}) , \\
-            \infty &amp; \text{otherwise}.
-            \end{cases}
-\]</span></p>
-</section>
-<section id="abc-sequential-monte-carlo" class="slide level2 smaller">
-<h2>ABC Sequential Monte Carlo</h2>
-<ul>
-<li>Input: data <span class="math inline">\(\boldsymbol{x}_{\text{obs}}\)</span>, prior <span class="math inline">\(\pi(\boldsymbol{\theta})\)</span>, distance <span class="math inline">\(\mathcal{D}(\cdot,\cdot)\)</span>, # of generations <span class="math inline">\(G\)</span>, # of particles <span class="math inline">\(K\)</span></li>
-<li>Start with <span class="math inline">\(\epsilon_0 = \infty\)</span>, <span class="math inline">\(\pi_0(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta})\)</span></li>
-<li>For each generation <span class="math inline">\(g = 1\)</span> to <span class="math inline">\(G\)</span>
-<ul>
-<li>For each particle <span class="math inline">\(k = 1\)</span> to <span class="math inline">\(K\)</span>
-<ul>
-<li>Repeatedly:
-<ul>
-<li>Generate a guess <span class="math inline">\(\boldsymbol{\theta}^{\ast}\)</span> from <span class="math inline">\(\pi_{g-1}(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})\)</span></li>
-<li>Generate fake data <span class="math inline">\(\boldsymbol{x}^{\ast}\)</span> from <span class="math inline">\(\boldsymbol{\theta}^{\ast}\)</span></li>
-<li>Stop when <span class="math inline">\(\mathcal{D}(\boldsymbol{x}^\ast , \boldsymbol{x}_{\text{obs}}) &lt; \epsilon_{g-1}\)</span></li>
-</ul></li>
-<li>Store <span class="math inline">\(\boldsymbol{\theta}_k^g = \boldsymbol{\theta}^{\ast}\)</span></li>
-</ul></li>
-<li>Create a new threshold <span class="math inline">\(\epsilon_g \le \epsilon_{g-1}\)</span> and a new population by discarding particles with <span class="math inline">\(\mathcal{D}(\boldsymbol{x}_k^g , \boldsymbol{x}_{\text{obs}}) \ge \epsilon_{g}\)</span> until the effective sample size is <span class="math inline">\(K / 2\)</span></li>
-<li>Weight each particle by <span class="math inline">\(w_k^g \propto \pi(\boldsymbol{\theta}_k^g) / \pi_{g-1}( \boldsymbol{\theta}_k^g \mid \boldsymbol{x}_{\text{obs}} )\)</span></li>
-<li>Create a KDE <span class="math inline">\(\pi_g(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})\)</span> based on the surviving <span class="math inline">\(( \boldsymbol{\theta}_k^g , w_k^g )\)</span> particles</li>
-</ul></li>
-</ul>
-</section></section>
-<section>
-<section id="section-2" class="title-slide slide level1 center">
-<h1></h1>
-<h2>
-Dependent random sums
-</h2>
+<section id="dependent-random-sums" class="slide level2">
+<h2>Dependent random sums</h2>
 <div class="smaller">
 <p><span class="math display">\[
 N \sim \mathsf{Poisson}(\lambda),
@@ -673,10 +599,9 @@ Python package
 <p>“Easier to throw more computers at the problem than more brains” Hadley Wickham</p>
 </blockquote>
 </div>
-</section></section>
-<section>
-<section id="section-4" class="title-slide slide level1 smaller center">
-<h1></h1>
+</section>
+<section id="section-4" class="slide level2 smaller">
+<h2></h2>
 <h2>
 Get involved!
 </h2>
@@ -706,11 +631,70 @@ Get involved!
 </figure>
 </div>
 </div>
+</section></section>
+<section>
+<section id="appendix" class="title-slide slide level1 center" data-visibility="uncounted" data-background-image="unsw-yellow-shape.png">
+<h1>Appendix</h1>
+
 </section>
 <section id="section-5" class="slide level2" data-visibility="uncounted">
 <h2></h2>
 <iframe src="https://pat-laub.github.io/DeepLearningForActuaries/" width="100%" height="700" style="border:none;">
 </iframe>
+</section>
+<section id="section-6" class="slide level2 smaller" data-visibility="uncounted">
+<h2></h2>
+<h2>
+Does it work in theory?
+</h2>
+<p><strong>Proposition</strong>: Say we have continuous data <span class="math inline">\(\boldsymbol{x}_{\text{obs}}\)</span>, and our prior <span class="math inline">\(\pi(\boldsymbol{\theta})\)</span> has bounded support.</p>
+<p>If for some <span class="math inline">\(\epsilon \ge 0\)</span> we have</p>
+<p><span class="math display">\[ \sup\limits_{ (\boldsymbol{z}, \boldsymbol{\theta}) : \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}} ) &lt; \epsilon, \boldsymbol{\theta} \in \boldsymbol{ \Theta } } \pi( \boldsymbol{z} \mid \boldsymbol{ \theta }) &lt; \infty \]</span></p>
+<p>then for each <span class="math inline">\(\boldsymbol{\theta} \in \boldsymbol{\Theta}\)</span></p>
+<p><span class="math display">\[ \lim_{\epsilon \to 0} \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) . \]</span></p>
+<div class="absolute" style="top: 380px; left: 1000px; ">
+<p><span class="math inline">\(\square\)</span></p>
+</div>
+<p>We sample the <em>approximate</em>/<em>ABC posterior</em>.</p>
+<p><span class="math display">\[ \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \propto \pi(\theta) \times \mathbb{P}\bigl( \mathcal{D}\bigl(\boldsymbol{x}_{\text{obs}}, \boldsymbol{x}^{\ast} \bigr) \leq \epsilon \text{ where } \boldsymbol{x}^{\ast} \sim \boldsymbol{\theta} \bigr) , \]</span></p>
+<p>but we care about the true posterior <span class="math inline">\(\pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})\)</span>.</p>
+<div class="footer">
+<p>Rubio and Johansen (2013), <em>A simple approach to maximum intractable likelihood estimation</em>, Electronic Journal of Statistics.</p>
+</div>
+</section>
+<section id="mixed-data" class="slide level2" data-visibility="uncounted">
+<h2>Mixed data</h2>
+<p>We filled in some of the blanks for mixed data. Our data was mostly continuous data but had an atom at 0.</p>
+<p>Get <span class="math display">\[ \lim_{\epsilon \to 0} \pi_\epsilon(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \pi(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) \]</span></p>
+<p>when</p>
+<p><span class="math display">\[ \mathcal{D}(\boldsymbol{z}, \boldsymbol{x}_{\text{obs}}) = \begin{cases}
+            \mathcal{D}^+(\boldsymbol{z}^+, \boldsymbol{x}_{\text{obs}^+}) &amp; \text{if } \# \text{Zeros}(\boldsymbol{z}) = \# \text{Zeros}(\boldsymbol{x}_{\text{obs}}) , \\
+            \infty &amp; \text{otherwise}.
+            \end{cases}
+\]</span></p>
+</section>
+<section id="abc-sequential-monte-carlo" class="slide level2 smaller" data-visibility="uncounted">
+<h2>ABC Sequential Monte Carlo</h2>
+<ul>
+<li>Input: data <span class="math inline">\(\boldsymbol{x}_{\text{obs}}\)</span>, prior <span class="math inline">\(\pi(\boldsymbol{\theta})\)</span>, distance <span class="math inline">\(\mathcal{D}(\cdot,\cdot)\)</span>, # of generations <span class="math inline">\(G\)</span>, # of particles <span class="math inline">\(K\)</span></li>
+<li>Start with <span class="math inline">\(\epsilon_0 = \infty\)</span>, <span class="math inline">\(\pi_0(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}}) = \pi(\boldsymbol{\theta})\)</span></li>
+<li>For each generation <span class="math inline">\(g = 1\)</span> to <span class="math inline">\(G\)</span>
+<ul>
+<li>For each particle <span class="math inline">\(k = 1\)</span> to <span class="math inline">\(K\)</span>
+<ul>
+<li>Repeatedly:
+<ul>
+<li>Generate a guess <span class="math inline">\(\boldsymbol{\theta}^{\ast}\)</span> from <span class="math inline">\(\pi_{g-1}(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})\)</span></li>
+<li>Generate fake data <span class="math inline">\(\boldsymbol{x}^{\ast}\)</span> from <span class="math inline">\(\boldsymbol{\theta}^{\ast}\)</span></li>
+<li>Stop when <span class="math inline">\(\mathcal{D}(\boldsymbol{x}^\ast , \boldsymbol{x}_{\text{obs}}) &lt; \epsilon_{g-1}\)</span></li>
+</ul></li>
+<li>Store <span class="math inline">\(\boldsymbol{\theta}_k^g = \boldsymbol{\theta}^{\ast}\)</span></li>
+</ul></li>
+<li>Create a new threshold <span class="math inline">\(\epsilon_g \le \epsilon_{g-1}\)</span> and a new population by discarding particles with <span class="math inline">\(\mathcal{D}(\boldsymbol{x}_k^g , \boldsymbol{x}_{\text{obs}}) \ge \epsilon_{g}\)</span> until the effective sample size is <span class="math inline">\(K / 2\)</span></li>
+<li>Weight each particle by <span class="math inline">\(w_k^g \propto \pi(\boldsymbol{\theta}_k^g) / \pi_{g-1}( \boldsymbol{\theta}_k^g \mid \boldsymbol{x}_{\text{obs}} )\)</span></li>
+<li>Create a KDE <span class="math inline">\(\pi_g(\boldsymbol{\theta} \mid \boldsymbol{x}_{\text{obs}})\)</span> based on the surviving <span class="math inline">\(( \boldsymbol{\theta}_k^g , w_k^g )\)</span> particles</li>
+</ul></li>
+</ul>
 <script defer="">
     // Remove the highlight.js class for the 'compile', 'min', 'max'
     // as there's a bug where they are treated like the Python built-in
