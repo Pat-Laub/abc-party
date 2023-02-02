@@ -153,27 +153,6 @@ $\delta$
 J. Garrido, C. Genest, and J. Schulz (2016), _Generalized linear models for dependent frequency and severity of insurance claims_, IME.
 :::
 
-## Dependent random sums code
-
-<br>
-
-``` python
-import approxbayescomp as abc
- 
-# Load data to fit
-obsData = ...
- 
-# Frequency-Loss Model
-freq = "poisson"
-sev = "frequency dependent exponential"
-psi = abc.Psi("sum") # Aggregation process
- 
-# Fit the model to the data using ABC
-prior = abc.IndependentUniformPrior([(0, 10), (0, 20), (-1, 1)])
-model = abc.Model(freq, sev, psi, prior)
-fit = abc.smc(numIters, popSize, obsData, model)
-```
-
 ## Time-varying arrival rate {data-visibility="uncounted"}
 
 $$\lambda(t) = a+b[1+\sin(2\pi c t)]$$
@@ -268,6 +247,28 @@ Cf. [https://pat-laub.github.io](https://pat-laub.github.io).
 :::
 
 # Appendix {data-visibility="uncounted" background-image="unsw-yellow-shape.png"}
+
+## Dependent random sums code
+
+<br>
+
+``` python
+import approxbayescomp as abc
+ 
+# Load data to fit
+obsData = ...
+ 
+# Frequency-Loss Model
+freq = "poisson"
+sev = "frequency dependent exponential"
+psi = abc.Psi("sum") # Aggregation process
+ 
+# Fit the model to the data using ABC
+prior = abc.IndependentUniformPrior([(0, 10), (0, 20), (-1, 1)])
+model = abc.Model(freq, sev, psi, prior)
+fit = abc.smc(numIters, popSize, obsData, model)
+```
+
 
 ## {data-visibility="uncounted"}
 
