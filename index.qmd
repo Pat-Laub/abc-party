@@ -28,7 +28,9 @@ execute:
 
 ## {data-visibility="uncounted"}
 
-![Our IME paper](abstract.png)
+<br>
+
+![](title.png)
 
 # 
 
@@ -233,7 +235,8 @@ A rough draft of C++ implementation: [https://github.com/Pat-Laub/cppabc](https:
 
 . . .
 
-> "Easier to throw more computers at the problem than more brains" Hadley Wickham
+> "... you can just throw more and more computers at the problem, and that's much much easier than throwing more brains at a problem."
+Hadley Wickham
 
 ## {.smaller}
 
