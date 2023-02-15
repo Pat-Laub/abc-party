@@ -1,7 +1,7 @@
 ---
 title: Approximate Bayesian Computation and Insurance
-subtitle: PARTY Valencia
-author: Dr Patrick Laub
+institute: UNSW Sydney, School of Risk and Actuarial Studies
+author: Patrick Laub
 date: 3 February 2023
 date-format: long
 format:
@@ -21,6 +21,7 @@ format:
       grid: false
     include-before: <div class="line right"></div>
     include-after: <script>registerRevealCallbacks();</script>
+    footer: Patrick Laub, PARTY Conference 2023, Valencia
 highlight-style: breeze
 execute:
   echo: true
