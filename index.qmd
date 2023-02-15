@@ -88,6 +88,9 @@ What is $\theta = \mathbb{P}(\text{Heads})$?
 
 {{< include _coin-flip-animations.qmd >}}
 
+<!-- For exporting to PDF, the animations don't look good, so use the following static/image version: -->
+<!-- {{< include _coin-flip-animations-backup.qmd >}} -->
+
 #
 
 <h2>Statistics with likelihoods</h2>
@@ -196,10 +199,16 @@ $\sigma$
 
 <iframe src="https://pat-laub.github.io/approxbayescomp/" width="100%" height="600" style="border:none;"></iframe>
 
+<!-- When exporting to PDF use: -->
+
+<!-- ![](abc-python.png) -->
+
 ## R package
 
-
 <iframe src="https://pat-laub.github.io/approxbayescomp-r/" width="100%" height="600" style="border:none;"></iframe>
+<!-- When exporting to PDF use: -->
+
+<!-- ![](abc-r.png) -->
 
 ::: footer
 A rough draft of C++ implementation: [https://github.com/Pat-Laub/cppabc](https://github.com/Pat-Laub/cppabc).
@@ -274,6 +283,10 @@ fit = abc.smc(numIters, popSize, obsData, model)
 ## {data-visibility="uncounted"}
 
 <iframe src="https://pat-laub.github.io/DeepLearningForActuaries/" width="100%" height="700" style="border:none;"></iframe>
+
+<!-- When exporting to PDF use: -->
+
+<!-- ![](dl-slides.png) -->
 
 ## {.smaller data-visibility="uncounted"}
 
